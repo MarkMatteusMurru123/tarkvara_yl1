@@ -15,7 +15,7 @@ namespace tarkvara_yl1
         {
             x1 = x;
             y1 = y;
-                
+            
         }
         public double GetX()
         {
@@ -45,49 +45,46 @@ namespace tarkvara_yl1
 
         }
 
-        public double GetDistance(Point p1, Point p2)
+        public double GetDistance( Point p2)
         {
-            return Math.Sqrt(Math.Pow(p1.GetX() - p2.GetX(), p1.GetY() - p2.GetY()));
+            return Math.Sqrt(Math.Pow(GetX() - p2.GetX(), GetY() - p2.GetY()));
         }
 
-        public Point VectorTo(Point p1, Point p2)
+        public Point VectorTo(Point p2)
         {
-            return new Point(p2.GetX() - p1.GetX(), p2.GetY() - p1.GetY());
+            return new Point(p2.GetX() - GetX(), p2.GetY() - GetY());
+        }
+        public double Distance( Point p2)
+        {
+            return VectorTo(p2).GetRho();
         }
 
-        public double Distance(Point p1, Point p2)
+        public void Translate(double dx, double dy)
         {
-            return p1.VectorTo(p1, p2).GetRho();
+            x1 += dx;
+            y1 += dy;
         }
 
-        public void Translate(Point p1, double dx, double dy)
+        public void Scale(double factor)
         {
-            p1.x1 += dx;
-            p1.y1 += dy;
+            x1 *= factor;
+            y1 *= factor;
         }
 
-        public void Scale(Point p1, double factor)
+        public void CentreRotate(double angle)
         {
-            p1.x1 *= factor;
-            p1.y1 *= factor;
-        }
-
-        public Point CentreRotate(Point p1, double angle)
-        {
-            double tempx = p1.GetRho() * Math.Cos(p1.GetTheta() + angle);
-            double tempy = p1.GetRho() * Math.Sin(p1.GetTheta() + angle);
-            p1.x1 = tempx;
-            p1.y1 = tempy;
-            return p1;
+            double tempx = GetRho() * Math.Cos(GetTheta() + angle);
+            double tempy = GetRho() * Math.Sin(GetTheta() + angle);
+            x1 = tempx;
+            y1 = tempy;
+           
         }
 
         public void Rotate(Point p, double angle)
         {
-            p.Translate(p,-(p.x1), -(p.y1));
-            p.CentreRotate(p, angle);
-            p.Translate(p,p.x1,p.y1);
-                
-
+            Translate(-(p.x1), -(p.y1));
+            CentreRotate( angle);
+            Translate(p.x1,p.y1);
         }
     }
 
