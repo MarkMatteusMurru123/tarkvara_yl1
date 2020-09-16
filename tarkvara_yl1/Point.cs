@@ -11,6 +11,7 @@ namespace tarkvara_yl1
         private double x1;
         private double y1;
 
+        
         public Point(double x, double y)
         {
             x1 = x;
