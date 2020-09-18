@@ -105,5 +105,27 @@ namespace Tests
             Assert.AreEqual(expected.GetX(), _p.GetX());
             Assert.AreEqual(expected.GetY(), _p.GetY());
         }
+        [TestMethod]
+        public void CentreRotateTest()
+        {
+            double angle = Math.PI / 3;
+
+            double x = _p.GetRho() * Math.Cos(_p.GetTheta() + angle);
+            double y = _p.GetRho() * Math.Sin(_p.GetTheta() + angle);
+            _p.CentreRotate(angle);
+            Assert.AreEqual(x, _p.GetX());
+            Assert.AreEqual(y,_p.GetY());
+        }
+        [TestMethod]
+        public void RotateTest()
+        {
+            double angle = Math.PI / 3;
+
+            double x = _p.GetRho() * Math.Cos(_p.GetTheta() + angle);
+            double y = _p.GetRho() * Math.Sin(_p.GetTheta() + angle);
+            _p.CentreRotate(angle);
+            Assert.AreEqual(x, _p.GetX());
+            Assert.AreEqual(y, _p.GetY());
+        }
     }
 }
