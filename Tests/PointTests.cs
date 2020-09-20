@@ -118,14 +118,12 @@ namespace Tests
         }
         [TestMethod]
         public void RotateTest()
-        {
+        { 
             double angle = Math.PI / 3;
+            var before = _p.VectorTo(_p2).GetTheta();
 
-            double x = _p.GetRho() * Math.Cos(_p.GetTheta() + angle);
-            double y = _p.GetRho() * Math.Sin(_p.GetTheta() + angle);
-            _p.CentreRotate(angle);
-            Assert.AreEqual(x, _p.GetX());
-            Assert.AreEqual(y, _p.GetY());
+
         }
+       
     }
 }
