@@ -6,55 +6,57 @@ namespace tarkvara_yl1
 {
     public class Point2
     {
-        private double _rho;
-        private double _theta;
-        private double _x;
-        private double _y;
+        public double _rho;
+        public double _theta;
+        public double _x;
+        public double _y;
 
         public Point2(double x, double y)
         {
             _x = x;
             _y = y;
-            _rho = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
-            _theta = Math.Atan2(x, y);
+            Rho();
+            Theta();
 
         }
-        public double X()
-        {
-            return Rho() * Math.Cos(Theta());
-        }
+
+        public double X() => _x = _rho * Math.Cos(_theta);
+        
         
         public double Y()
         {
-            return Rho() * Math.Sin(Theta());
+            _y = _rho * Math.Sin(_theta);
+            return _y;
         }
 
         public double Rho()
         {
+            _rho = Math.Sqrt(Math.Pow(_x, 2) + Math.Pow(_y, 2));
             return _rho;
         }
 
         public double Theta()
         {
+            _theta = Math.Atan2(_y, _x);
             return _theta;
         }
 
 
-        public Point VectorTo(Point p2)
+        public Point2 VectorTo(Point2 p2)
         {
             //VectorTo(other)
             //PRE: other !=null
             //POST: Result.x() = other.X() - X()
             //      Result.y() = other.Y() - Y()
-            return new Point(p2.GetX() - X(), p2.GetY() - Y());
+            return new Point2(p2.X() - X(), p2.Y() - Y());
         }
 
-        public double Distance(Point p2)
+        public double Distance(Point2 p2)
         {
             // Distance(other)
             // PRE: other != null
             // POST: Result = VectorTo(other).GetRho();
-            return VectorTo(p2).GetRho();
+            return VectorTo(p2).Rho();
         }
 
         public void Translate(double dx, double dy)
