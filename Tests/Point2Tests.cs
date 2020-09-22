@@ -52,11 +52,11 @@ namespace Tests
         public void VectorToTest()
         {
             Point2 expected = _p.VectorTo(_p2);
-            Point2 actual = new Point2(_p2.X() - _p.X(), _p2.Y() - _p.Y());
-            Assert.AreEqual(expected.X(), actual.X());
-            Assert.AreEqual(expected.Y(), actual.Y());
-            Assert.AreEqual(expected._rho, actual._rho);
-            Assert.AreEqual(expected._theta, actual._theta);
+            Point2 actual = new Point2(_p2._x - _p._x, _p2._y - _p._y);
+            Assert.AreEqual(expected._x, actual._x, 0.00001);
+            Assert.AreEqual(expected._y, actual._y, 0.00001);
+            Assert.AreEqual(expected._rho, actual._rho, 0.00001);
+            Assert.AreEqual(expected._theta, actual._theta, 0.00001);
 
         }
 
@@ -86,8 +86,8 @@ namespace Tests
             double dy = 10;
             _p.Translate(dx, dy);
             Point2 expected = new Point2(x + dx, y + dy);
-            Assert.AreEqual(expected.X(), _p.X());
-            Assert.AreEqual(expected.Y(), _p.Y());
+            Assert.AreEqual(expected._x, _p._x);
+            Assert.AreEqual(expected._y, _p._y);
         }
         [TestMethod]
         public void CentreRotateTest()
@@ -104,7 +104,10 @@ namespace Tests
         public void RotateTest()
         {
             double angle = Math.PI / 3;
-            var before = _p.VectorTo(_p2).Theta();
+            var before = _p.VectorTo(_p2)._theta;
+            _p.Rotate(_p2, angle);
+            var after = _p.VectorTo(_p2)._theta;
+            Assert.AreEqual(before + angle, after, 0.00001);
 
 
         }

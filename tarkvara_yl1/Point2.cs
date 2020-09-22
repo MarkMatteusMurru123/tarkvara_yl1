@@ -19,15 +19,21 @@ namespace tarkvara_yl1
             Theta();
 
         }
-
-        public double X() => _x = _rho * Math.Cos(_theta);
-        
-        
-        public double Y()
+        //INVARIANT: 0 <= theta <= 360
+        public bool InvariantCheck()
         {
-            _y = _rho * Math.Sin(_theta);
-            return _y;
+            if (_theta >= 0 && _theta <= 2* Math.PI)
+            {
+                return true;
+            }
+
+            return false;
         }
+        public double X() => _rho * Math.Cos(_theta);
+        
+        
+        public double Y() => _rho * Math.Sin(_theta);
+        
 
         public double Rho()
         {
@@ -38,6 +44,8 @@ namespace tarkvara_yl1
         public double Theta()
         {
             _theta = Math.Atan2(_y, _x);
+            if (InvariantCheck()) return _theta;
+            _theta += 2 * Math.PI;
             return _theta;
         }
 
@@ -56,7 +64,7 @@ namespace tarkvara_yl1
             // Distance(other)
             // PRE: other != null
             // POST: Result = VectorTo(other).GetRho();
-            return VectorTo(p2).Rho();
+            return VectorTo(p2)._rho;
         }
 
         public void Translate(double dx, double dy)
@@ -65,10 +73,10 @@ namespace tarkvara_yl1
             //POST:
             //x == old x + dx(viitab vanale väärtusele)
             //y == old y + dy
-            _x += X() + dx;
-            _y += Y() + dy;
-            _rho = Math.Sqrt(Math.Pow(_x, 2) + Math.Pow(_y, 2));
-            _theta = Math.Atan2(_x, _y);
+            _x = X() + dx;
+            _y = Y() + dy;
+            Theta();
+            Rho();
         }
 
         public void Scale(double factor)
@@ -80,7 +88,7 @@ namespace tarkvara_yl1
 
         public void CentreRotate(double angle)
         {
-            //PRE - 
+            //PRE not(x==0 and y == 0)
             //POST: GetTheta = old GetTheta() + angle % (2*PI)
             _theta = (_theta + angle) % (2 * Math.PI);
 
@@ -88,11 +96,18 @@ namespace tarkvara_yl1
 
         public void Rotate(Point2 p, double angle)
         {
-            //PRE: P != null
+            //PRE: not(x == p.x and y == p.y)
             //POST: p.VectorTo(this).GetTheta() = (p.VectorTo(old this).GetTheta() + angle) % (2*PI)
-            Translate(-p.X(), -(p.Y()));
-            CentreRotate(angle);
-            Translate(p.X(), p.Y());
+            if (_x == p._x && _y == p._y)
+            {
+                
+            }
+            else
+            {
+                Translate(-p._x, -p._y);
+                CentreRotate(angle);
+                Translate(p._x, p._y);
+            }
         }
 
     }
