@@ -108,9 +108,13 @@ namespace Tests
             _p.Rotate(_p2, angle);
             var after = _p.VectorTo(_p2)._theta;
             Assert.AreEqual(before + angle, after, 0.00001);
-
-
         }
-
+        [TestMethod]
+        public void InvariantCheckTest()
+        {
+            var actual = _p.InvariantCheck();
+            var expected = _p2.InvariantCheck();
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

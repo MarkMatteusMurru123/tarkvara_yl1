@@ -30,19 +30,29 @@ namespace tarkvara_yl1
             return false;
         }
         public double X() => _rho * Math.Cos(_theta);
-        
-        
+
+        // PRE: -
+        // POST: result.x = rho * math.cos(_theta)
+
         public double Y() => _rho * Math.Sin(_theta);
-        
+
+        // PRE: -
+        // POST: result.y = rho * math.sin(_theta)
 
         public double Rho()
         {
+            // PRE: -
+            // POST: result._rho
+
             _rho = Math.Sqrt(Math.Pow(_x, 2) + Math.Pow(_y, 2));
             return _rho;
         }
 
         public double Theta()
         {
+            // PRE: 0 <= theta <= 360
+            // POST: result._theta
+
             _theta = Math.Atan2(_y, _x);
             if (InvariantCheck()) return _theta;
             _theta += 2 * Math.PI;
