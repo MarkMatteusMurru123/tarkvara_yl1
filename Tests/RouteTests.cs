@@ -12,19 +12,31 @@ namespace Tests
         private Point _p;
         private Point _p2;
         private Point _p3;
-        private List<Point> _routePoints;
+        private Route _testRoute;
         [TestInitialize]
         public void TestInitialize()
         {
             _p = new Point(10, 20);
             _p2 = new Point(-20, 60);
             _p3 = new Point(-60, 100);
-            _routePoints = new List<Point>(){_p, _p2, _p3};
+            _testRoute = new Route();
+        }
+
+        [TestMethod]
+        public void CreateRouteTest()
+        {
+            TestInitialize();
+            Assert.AreEqual(0, _testRoute.GetRouteCount());
+            Assert.AreEqual(0,_testRoute.GetLength());
         }
         [TestMethod]
         public void AddPointTest()
         {
-           
+            int previousCount = _testRoute.GetRouteCount();
+            _testRoute.AddPoint(20, 30, 3);
+            Assert.AreEqual(previousCount + 1, _testRoute.GetRouteCount());
+            _testRoute.AddPoint(10, 15, 2);
+
         }
         [TestMethod]
         public void RemovePointTest()
