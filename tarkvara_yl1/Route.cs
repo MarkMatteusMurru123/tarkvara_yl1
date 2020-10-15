@@ -4,8 +4,8 @@ namespace tarkvara_yl1
 {
     public class Route
     {
-        private List<Point> RoutePoints;
-        private double Distance;
+        private readonly List<Point> RoutePoints;
+        private double _distance;
         public Route()
         {
             //Eeltingimused: -
@@ -17,7 +17,7 @@ namespace tarkvara_yl1
 
         public bool IsSuitableIndex(int index)
         {
-            return 0 <= index && index < RoutePoints.Count;
+            return 0 <= index && index <= RoutePoints.Count;
         }
         public void AddPoint(double x, double y, int index)
         {
@@ -49,15 +49,24 @@ namespace tarkvara_yl1
 
             //    Kui töös oleva marsruudi elementide arv n on väiksem või võrdne ühega, siis
             //Tulem = 0.
-            Distance = 0;
-            if (RoutePoints.Count <= 1) return Distance;
-            for (int i = 0; i < RoutePoints.Count; i++)
+            _distance = 0;
+            if (RoutePoints.Count <= 1) return _distance;
+            for (int i = 0; i < RoutePoints.Count - 1; i++)
             {
-                Distance += RoutePoints[i].Distance(RoutePoints[i + 1]);
+                _distance += RoutePoints[i].Distance(RoutePoints[i + 1]);
             }
 
-            return Distance;
+            return _distance;
         }
 
+        public int GetRouteCount()
+        {
+            return RoutePoints.Count;
+        }
+
+        public List<Point> GetList()
+        {
+            return RoutePoints;
+        }
     }
 }
